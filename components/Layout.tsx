@@ -13,13 +13,8 @@ import AppContext from "../context/AppContext";
 import { GlobalStyle } from "../components";
 
 import { Wallet, providers } from "ethers";
-
+import { connect } from "@tableland/sdk";
 import notify from "../hooks/notification";
-import { NFTStorage, File } from "nft.storage/dist/bundle.esm.min.js";
-
-const nftClient = new NFTStorage({
-  token: process.env.NEXT_NFT_STORAGE_PRIVATE_KEY,
-});
 
 interface Props {
   children: any;
@@ -51,12 +46,18 @@ if (typeof window !== "undefined") {
   });
 }
 
+const collectionsTable = "collections_80001_801";
+const privateKey = process.env.NEXT_PUBLIC_WALLET_PRIVATE_KEY;
+const alchemyKey = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY;
+const tblWallet = new Wallet(privateKey);
+const tblProvider = new providers.AlchemyProvider("maticmum", alchemyKey);
 const Layout = ({ children }: Props) => {
   const [theme, setTheme] = useState(true);
 
   const [currentAccount, setCurrentAccount] = useState();
   const [provider, setProvider] = useState();
   const [chainId, setChainId] = useState();
+  const [createLoading, setCreateLoading] = useState();
 
   useEffect(() => {
     setTheme(JSON.parse(localStorage.getItem("theme") || "true"));
@@ -92,6 +93,44 @@ const Layout = ({ children }: Props) => {
       setCurrentAccount();
     }
   };
+  const createEventTBl = async (event) => {
+    try {
+      const signer = tblWallet.connect(tblProvider);
+      const tbl = await connect({ signer });
+      console.log(tbl, "THIS IS THE TBL");
+      const writeTx = await tbl.write(
+        `INSERT INTO ${collectionsTable} VALUES ('${event.id}', '${event.name}', '${event.image}','${event.owner}','${event.description}','${event.price}''${event.startDate}','${event.endDate}')`
+      );
+      console.log(writeTx);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getEvents = async () => {
+    try {
+      const signer = tblWallet.connect(tblProvider);
+      const tbl = await connect({ signer });
+      const { rows } = await tbl.read(`SELECT * FROM ${collectionsTable}`);
+      console.log("GETTING ALL EVENTS ", rows);
+      return rows;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getEvent = async (id) => {
+    try {
+      const signer = tblWallet.connect(tblProvider);
+      const tbl = await connect({ signer });
+      const { rows } = await tbl.read(
+        `SELECT * FROM ${collectionsTable} WHERE id = '${id}'`
+      );
+      console.log(rows);
+      return rows;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const connectWallet = async () => {
     if (web3Modal.cachedProvider) {
@@ -121,6 +160,94 @@ const Layout = ({ children }: Props) => {
     poll();
   }, []);
 
+  const createEvent = async ({
+    args,
+    abi,
+    address,
+    type,
+    imageURL,
+    startDate,
+    endDate,
+    description,
+    price,
+  }) => {
+    console.log("HERE IS EVERTYTHING", args, abi, address, type, imageURL);
+    const wallet = await web3Modal.connect();
+    const tProvider = new ethers.providers.Web3Provider(wallet);
+    try {
+      const signer = tProvider.getSigner();
+      setCreateLoading(true);
+      const connectedContract = new ethers.Contract(address, abi, signer);
+      const tx = await connectedContract.createDrop(
+        args[0], // Collection Name
+        args[1], // Collection Symbol
+        args[2], // Contract Admin
+        args[3], // Token Supply
+        args[4], // Royalty Bps
+        args[5], // Funds Recipient
+        args[6], // Sales Config
+        args[7], // metadataBaseURI
+        args[8] // metadataContractURI);)
+      );
+      const receipt = await tx.wait();
+      const contractAddress = receipt?.events?.[4]?.args?.[1] || "ddd";
+      console.log(
+        "This is the contract address of collection",
+        contractAddress
+      );
+
+      console.log("HERE IS THE RECEIPT", receipt);
+      console.log("TABLELAND DATA", {
+        id: contractAddress,
+        name: args[0],
+        image: imageURL,
+        owner: currentAccount,
+        startDate,
+        endDate,
+        description,
+        price,
+      });
+      createEventTBl({
+        id: contractAddress,
+        name: args[0],
+        image: imageURL,
+        owner: currentAccount,
+        startDate,
+        endDate,
+        description,
+        price,
+      });
+
+      // console.log("Event Created Successfully", tx);
+      setCreateLoading(false);
+      notify({ title: "Event created successfully", type: "success" });
+    } catch (e) {
+      setCreateLoading(false);
+      console.log(e);
+      notify({ title: "Error creating event", type: "error" });
+    }
+  };
+
+  const mintTicket = async ({ abi, address, price }) => {
+    const wallet = await web3Modal.connect();
+    const tProvider = new ethers.providers.Web3Provider(wallet);
+    try {
+      setCreateLoading(true);
+      const signer = tProvider.getSigner();
+
+      const connectedContract = new ethers.Contract(address, abi, signer);
+      const tx = await connectedContract.purchase(price, { value: price });
+
+      setCreateLoading(false);
+      notify({ title: "Event registered successfully", type: "success" });
+      console.log("Event Created Successfully", tx);
+    } catch (e) {
+      console.log(e);
+      notify({ title: "Error registering for event", type: "error" });
+      setCreateLoading(false);
+    }
+  };
+
   return (
     <StyledLayout>
       <AppContext.Provider
@@ -131,6 +258,12 @@ const Layout = ({ children }: Props) => {
           currentAccount,
           disconnectWallet,
           chainId,
+          getEvents,
+          createEvent,
+          createEventTBl,
+          mintTicket,
+          createLoading,
+          getEvent,
         }}
       >
         <GlobalStyle theme={theme} />

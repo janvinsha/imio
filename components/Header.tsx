@@ -18,7 +18,7 @@ const Header = () => {
     theme,
     connectWallet,
     currentAccount,
-
+    disconnectWallet,
     changeTheme,
   } = useContext(AppContext);
   useEffect(() => {
@@ -43,12 +43,22 @@ const Header = () => {
             Events
           </Link>
         </div>
+        <div className="link">
+          <Link
+            href="/verify"
+            className={pathname == "/verify" ? "active" : ""}
+          >
+            Verify
+          </Link>
+        </div>
         <HeaderSearch />
       </div>
       <motion.div className="right">
-        <button onClick={() => router.push("/create-nft")}>Create Event</button>
+        <button onClick={() => router.push("/create-event")}>
+          Create Event
+        </button>
         {currentAccount ? (
-          <button onClick={() => connectWallet()} className="secondary-btn">
+          <button onClick={() => disconnectWallet()} className="secondary-btn">
             Disconnect
           </button>
         ) : (
@@ -82,6 +92,14 @@ const Header = () => {
                 className={pathname == "/events" ? "active" : ""}
               >
                 Events
+              </Link>
+            </div>
+            <div className="link">
+              <Link
+                href="/verify"
+                className={pathname == "/verify" ? "active" : ""}
+              >
+                Verify
               </Link>
             </div>
 
@@ -162,11 +180,11 @@ const StyledHeader = styled(motion.div)<{
     a {
       font-size: 1.2rem;
       &:hover {
-        color: #0592ec;
+        color: #20b2aa;
       }
     }
     .active {
-      color: #0592ec;
+      color: #20b2aa;
     }
   }
   .right {
@@ -222,7 +240,7 @@ const StyledHeader = styled(motion.div)<{
       a {
         font-size: 1.3rem;
         &:hover {
-          color: #0592ec;
+          color: #20b2aa;
         }
       }
     }

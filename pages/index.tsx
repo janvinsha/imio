@@ -49,6 +49,7 @@ const StyledHome = styled(motion.div)<{ theme_: boolean }>`
   @media screen and (max-width: 900px) {
     padding: 1rem 1rem;
     flex-flow: column wrap;
+    gap: 3rem;
   }
   .desc {
     display: flex;
@@ -58,6 +59,9 @@ const StyledHome = styled(motion.div)<{ theme_: boolean }>`
     text-align: center;
     gap: 0rem;
     width: 50%;
+    @media screen and (max-width: 900px) {
+      width: 100%;
+    }
     h2 {
       font-weight: medium;
     }
@@ -74,7 +78,7 @@ const StyledHome = styled(motion.div)<{ theme_: boolean }>`
     width: 50%;
     @media screen and (max-width: 900px) {
       width: 100%;
-      padding: 1rem 0rem;
+      padding: 0rem 2rem;
       align-items: center;
       flex-direction: column;
     }
