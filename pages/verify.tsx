@@ -68,33 +68,31 @@ const Verify = () => {
         <h2 className="page_title text-gradient">Verify User</h2>
       </motion.div>
       <motion.div className="page_container">
-        <div className="preview_div">
-          <form onSubmit={submitHandler}>
-            <Input
-              name="Event Address"
-              label="Event Address"
-              asterik={true}
-              placeholder="Event Address"
-              value={eventAddress}
-              onChange={(e) => setEventAddress(e.target.value)}
-              required
-              theme={theme}
-            />
+        <form onSubmit={submitHandler}>
+          <Input
+            name="Event Address"
+            label="Event Address"
+            asterik={true}
+            placeholder="Event Address"
+            value={eventAddress}
+            onChange={(e) => setEventAddress(e.target.value)}
+            required
+            theme={theme}
+          />
 
-            <Input
-              name="User address"
-              label="User address"
-              asterik={true}
-              value={userAddress}
-              placeholder="User address"
-              onChange={(e) => setUserAddress(e.target.value)}
-              required
-              theme={theme}
-            />
+          <Input
+            name="User address"
+            label="User address"
+            asterik={true}
+            value={userAddress}
+            placeholder="User address"
+            onChange={(e) => setUserAddress(e.target.value)}
+            required
+            theme={theme}
+          />
 
-            <button type="submit">Verify User</button>
-          </form>
-        </div>
+          <button type="submit">Verify User</button>
+        </form>
       </motion.div>
     </StyledVerify>
   );
@@ -106,7 +104,8 @@ const StyledVerify = styled(motion.div)`
   padding: 2rem 6rem;
   gap: 2.5rem;
   @media screen and (max-width: 900px) {
-    gap: 2rem;
+    gap: 1rem;
+    padding: 2rem 2rem;
   }
   width: 100%;
   .page_header {
@@ -128,6 +127,15 @@ const StyledVerify = styled(motion.div)`
     justify-content: center;
     width: 100%;
     @media screen and (max-width: 900px) {
+      padding: 1rem 1rem;
+    }
+    form {
+      width: 40rem;
+      @media screen and (max-width: 900px) {
+        width: 100%;
+      }
+    }
+    @media screen and (max-width: 900px) {
       flex-flow: column wrap;
       padding: 1rem 0rem;
       gap: 0rem;
@@ -136,23 +144,6 @@ const StyledVerify = styled(motion.div)`
       font-size: 1.6rem;
       @media screen and (max-width: 900px) {
         font-size: 1.3rem;
-      }
-    }
-
-    .preview_div {
-      display: flex;
-      flex-flow: column wrap;
-      gap: 1rem;
-      padding-left: 2rem;
-      width: 50%;
-      s @media screen and (max-width: 900px) {
-        width: 100%;
-        padding-left: 0rem;
-        padding: 1rem;
-      }
-      .listing-price {
-        padding: 2rem 0.5rem;
-        color: #d04bff;
       }
     }
   }

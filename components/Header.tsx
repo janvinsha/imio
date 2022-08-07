@@ -102,6 +102,9 @@ const Header = () => {
                 Verify
               </Link>
             </div>
+            <button onClick={() => router.push("/create-event")}>
+              Create Event
+            </button>
 
             {currentAccount ? (
               <button onClick={() => connectWallet()} className="secondary-btn">
@@ -140,7 +143,7 @@ const StyledHeader = styled(motion.div)<{
   border-bottom: 2px solid ${({ theme_ }) => (theme_ ? " #575555" : " #eeeaea")};
   @media (max-width: 900px) {
     justify-content: space-between;
-    padding: 2.5rem 1.5rem;
+    padding: 1.8rem 1.5rem;
   }
   .left {
     width: 20%;

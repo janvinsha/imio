@@ -26,20 +26,7 @@ export default function Events() {
           <div className="left">
             <h2>Events</h2>
           </div>
-          <div className="right">
-            <Filter
-              name="Category"
-              asterik={false}
-              defaultValue="art"
-              className="filt"
-              options={[
-                { label: "Popular", value: "popular" },
-                { label: "Latest", value: "latest" },
-              ]}
-              onChange={(e) => setSortBy(e.target.value)}
-              required
-            />
-          </div>
+          <div className="right"></div>
         </div>
 
         <div className="cards">
@@ -85,7 +72,7 @@ const StyledEvents = styled(motion.div)<{ theme_: boolean }>`
     grid-column-gap: 1rem;
     grid-row-gap: 1rem;
     @media screen and (max-width: 900px) {
-      grid-template-columns: repeat(1, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       grid-column-gap: 0.5rem;
       grid-row-gap: 0.5rem;
       width: 100%;

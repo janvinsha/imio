@@ -305,7 +305,8 @@ const StyledCreateEvent = styled(motion.div)`
   padding: 2rem 6rem;
   gap: 2.5rem;
   @media screen and (max-width: 900px) {
-    gap: 2rem;
+    gap: 0rem;
+    padding: 2rem 1rem;
   }
   width: 100%;
   .page_header {
