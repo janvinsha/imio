@@ -65,7 +65,7 @@ const StyledEventCard = styled(motion.div)<{ theme_: boolean }>`
     width: 100%;
     object-fit: cover;
     @media screen and (max-width: 900px) {
-      height: 12rem;
+      height: 10rem;
     }
   }
   height: auto;

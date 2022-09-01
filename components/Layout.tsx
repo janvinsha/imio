@@ -3,6 +3,10 @@ import { ethers } from "ethers";
 import axios from "axios";
 import Web3Modal from "web3modal";
 
+const UAuthWeb3Modal = require("@uauth/web3modal");
+
+import UAuthSPA from "@uauth/js";
+
 import WalletConnect from "@walletconnect/web3-provider";
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import styled from "styled-components";
@@ -20,7 +24,22 @@ interface Props {
   children: any;
 }
 
+const uauthOptions: UAuthWeb3Modal.IUAuthOptions = {
+  clientID: "e60fd2ef-c514-4c0e-a61a-c0075872a4b7",
+  redirectUri: "https://imio-zora.vercel.app",
+  scope: "openid wallet",
+};
+
 let providerOptions = {
+  "custom-uauth": {
+    display: UAuthWeb3Modal.display,
+
+    connector: UAuthWeb3Modal?.connector,
+
+    package: UAuthSPA,
+
+    options: uauthOptions,
+  },
   walletconnect: {
     package: WalletConnect,
     options: {
@@ -44,6 +63,7 @@ if (typeof window !== "undefined") {
     cacheProvider: true,
     theme: `dark`,
   });
+  UAuthWeb3Modal?.registerWeb3Modal(web3Modal);
 }
 
 const collectionsTable = "collections_80001_801";

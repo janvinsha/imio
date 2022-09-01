@@ -16,6 +16,8 @@
     "@mui/material": "^5.8.7",
     "@tableland/sdk": "^2.0.2",
     "@types/react-lottie": "^1.2.6",
+    "@uauth/js": "^2.3.0",
+    "@uauth/web3modal": "^2.2.0",
     "@walletconnect/web3-provider": "^1.7.8",
     "@zoralabs/nft-components": "^1.1.2",
     "@zoralabs/nft-drop-contracts": "^1.0.1",
