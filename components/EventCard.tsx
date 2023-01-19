@@ -9,6 +9,7 @@ const EventCard = ({ event }) => {
   const { theme, currentAccount } = useContext(AppContext);
   const router = useRouter();
 
+  console.log("THIS IS THE EVENT OO", event);
   return (
     <StyledEventCard
       theme_={theme}

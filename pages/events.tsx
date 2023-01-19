@@ -84,7 +84,7 @@ const dummyData = [
   [
     "0x9D1d06e46836bb65a55DE25aEF21006E5f0E7CbD",
     "Zora Party",
-    "https://ipfs.infura.io/ipfs/QmWgVrQkAGwWgCXZkNcUpENe2T595cWDqHhEXjpyVL9CmH",
+    "https://imio.infura-ipfs.io/ipfs/QmWgVrQkAGwWgCXZkNcUpENe2T595cWDqHhEXjpyVL9CmH",
     "0x659CE0FC2499E1Fa14d30F5CD88aD058ba490e39",
     "Just a test event",
     "0.0111",
@@ -94,7 +94,7 @@ const dummyData = [
   [
     "0x5cbd3BaCB5231CEF94110B4358847DE6066d526B",
     "Imio Party",
-    "https://ipfs.infura.io/ipfs/QmQm65erzbevwrDWZvgp6xgzRBvU2W1TygHaV2EkGc9ENw",
+    "https://imio.infura-ipfs.io/ipfs/QmQm65erzbevwrDWZvgp6xgzRBvU2W1TygHaV2EkGc9ENw",
     "0x659CE0FC2499E1Fa14d30F5CD88aD058ba490e39",
     "Just a test event",
     "0.0111",
@@ -104,7 +104,7 @@ const dummyData = [
   [
     "0xD7664122Ed7483a9337A11f5d7b9666D5CD28103",
     "Dancing Man Event",
-    "https://ipfs.infura.io/ipfs/QmQJ9jLKcL6CdzUtkGVBL9UJQzV3y3C1GjiQZj7joF3fq9",
+    "https://imio.infura-ipfs.io/ipfs/QmQJ9jLKcL6CdzUtkGVBL9UJQzV3y3C1GjiQZj7joF3fq9",
     "0x659CE0FC2499E1Fa14d30F5CD88aD058ba490e39",
     "Just a test event",
     "0.0111",

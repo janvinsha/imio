@@ -11,6 +11,7 @@ import WalletConnect from "@walletconnect/web3-provider";
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { Database } from "@tableland/sdk";
 import Header from "./Header";
 
 import AppContext from "../context/AppContext";
@@ -129,24 +130,28 @@ const Layout = ({ children }: Props) => {
 
   const getEvents = async () => {
     try {
-      const signer = tblWallet.connect(tblProvider);
-      const tbl = await connect({ signer });
-      const { rows } = await tbl.read(`SELECT * FROM ${collectionsTable}`);
-      console.log("GETTING ALL EVENTS ", rows);
-      return rows;
+      const db = Database.readOnly("maticmum"); // Polygon Mumbai testnet
+
+      const { results } = await db
+        .prepare(`SELECT * FROM ${collectionsTable};`)
+        .all();
+      console.log(results);
+
+      return results;
     } catch (err) {
       console.log(err);
     }
   };
   const getEvent = async (id) => {
     try {
-      const signer = tblWallet.connect(tblProvider);
-      const tbl = await connect({ signer });
-      const { rows } = await tbl.read(
-        `SELECT * FROM ${collectionsTable} WHERE id = '${id}'`
-      );
-      console.log(rows);
-      return rows;
+      const db = Database.readOnly("maticmum"); // Polygon Mumbai testnet
+
+      const { results } = await db
+        .prepare(`SELECT * FROM ${collectionsTable} WHERE id = '${id}'`)
+        .all();
+      console.log(results);
+
+      return results;
     } catch (err) {
       console.log(err);
     }

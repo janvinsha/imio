@@ -30,10 +30,20 @@ const nftClient = new NFTStorage({
     process.env.NEXT_NFT_STORAGE_PRIVATE_KEY ||
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDM0MTBFMThhZUMzOGY4M2UyNTMxMzA4QmQyN0QyM0I3MjllNTJDNDUiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY0OTQzNjM4OTkyNiwibmFtZSI6IkRBTyJ9.eWlB3VEJKUk3R1S6e5RFRhdONcgBkyCMjrWA9O5kdsA",
 });
+
+const projectId = process.env.NEXT_PUBLIC_INFURA_PROJECT_ID;
+const projectSecret = process.env.NEXT_PUBLIC_INFURA_PROJECT_SECRET;
+
+const auth =
+  "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
+
 const client = create({
   host: "ipfs.infura.io",
   port: 5001,
   protocol: "https",
+  headers: {
+    authorization: auth,
+  },
 });
 const CreateEvent = () => {
   const [name, setName] = useState();
@@ -90,7 +100,7 @@ const CreateEvent = () => {
       console.log("CHECKING DP", dp);
 
       let photo = await client.add(dp);
-      let photoUrl = `https://ipfs.infura.io/ipfs/${photo.path}`;
+      let photoUrl = `https://imio.infura-ipfs.io/ipfs/${photo.path}`;
 
       console.log("Web3storage", photo, photoUrl);
       console.log("CHECKING DATES", startDate, endDate);
